@@ -1,0 +1,74 @@
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local esp = Instance.new("BillboardGui")
+local name = Instance.new("TextLabel")
+local mainesp = Instance.new("BillboardGui")
+local box = Instance.new("ImageLabel")
+
+esp.Name = "esp" 
+esp.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+esp.Active = true
+esp.AlwaysOnTop = true
+esp.LightInfluence = 1.000
+esp.Size = UDim2.new(0, 80, 0, 30)
+esp.StudsOffset = Vector3.new(0, 3, 0)
+
+name.Name = "name"
+name.Parent = esp
+name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+name.BackgroundTransparency = 1.000
+name.BorderColor3 = Color3.fromRGB(0, 0, 0)
+name.BorderSizePixel = 0
+name.Size = UDim2.new(1, 0, 1, 0)
+name.Font = Enum.Font.Ubuntu
+name.TextColor3 = Color3.fromRGB(255, 255, 255)
+name.TextScaled = true
+name.TextSize = 14.000
+name.TextStrokeTransparency = 0.000
+name.TextWrapped = true
+
+mainesp.Name = "mainesp"
+mainesp.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+mainesp.Active = true
+mainesp.AlwaysOnTop = true
+mainesp.LightInfluence = 1.000
+mainesp.MaxDistance = 999999.000
+mainesp.Size = UDim2.new(4, 0, 6, 0)
+
+box.Name = "box"
+box.Parent = mainesp
+box.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+box.BackgroundTransparency = 1.000
+box.BorderColor3 = Color3.fromRGB(0, 0, 0)
+box.BorderSizePixel = 0
+box.Size = UDim2.new(1, 0, 1, 0)
+box.Image = "http://www.roblox.com/asset/?id=16946608585"
+box.ImageTransparency = 0.430
+
+RunService.RenderStepped:Connect(function()
+	for i, v in pairs(Players:GetChildren()) do
+		if not v.Character.Head:FindFirstChild("esp") then
+			local sigma = Players.LocalPlayer
+			local nameClone = esp:Clone()
+			local espClone = mainesp:Clone()
+			nameClone.Parent = v.Character:FindFirstChild("Head")
+			nameClone:FindFirstChild("name").Text = nameClone.Parent.Parent.Name
+			espClone.Parent = v.Character:FindFirstChild("UpperTorso")
+			sigma.Character:FindFirstChild("Head").esp:Destroy()
+			sigma.Character:FindFirstChild("UpperTorso").mainesp:Destroy()
+		end
+	end
+end)
+
+Players.PlayerAdded:Connect(function(player)
+	if not player.Character.Head:FindFirstChild("esp") then
+		local sigma = Players.LocalPlayer
+		local nameClone = esp:Clone()
+		local espClone = mainesp:Clone()
+		nameClone.Parent = player.Character:FindFirstChild("Head")
+		nameClone:FindFirstChild("name").Text = nameClone.Parent.Parent.Name
+		espClone.Parent = player.Character:FindFirstChild("UpperTorso")
+		sigma.Character:FindFirstChild("Head").esp:Destroy()
+		sigma.Character:FindFirstChild("UpperTorso").mainesp:Destroy()
+	end
+end)
